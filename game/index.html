@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Moonlight Heist: a top-down stealth game. Steal the lantern and reach the exit unseen.">
+<link rel="icon" href="data:,">
+<title>Moonlight Heist — a stealth game</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #07080f; }
+  body {
+    font-family: "Trebuchet MS", "Segoe UI", Verdana, sans-serif;
+    color: #e8e4d2; display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; overflow: hidden;
+  }
+  #wrap { position: relative; width: 960px; max-width: 98vw; }
+  canvas {
+    display: block; width: 960px; height: 640px; max-width: 98vw;
+    background: #10131f; border: 2px solid #3a3f5c; border-radius: 10px;
+    box-shadow: 0 0 60px rgba(80, 110, 255, 0.12), 0 18px 50px rgba(0, 0, 0, 0.6);
+    cursor: crosshair;
+  }
+  #hud {
+    position: absolute; left: 0; right: 0; top: 0; display: flex;
+    justify-content: space-between; align-items: flex-start; padding: 10px 14px;
+    pointer-events: none; font-size: 14px; text-shadow: 0 1px 3px #000;
+  }
+  #hud .panel {
+    background: rgba(8, 10, 20, 0.72); border: 1px solid rgba(200, 180, 120, 0.35);
+    border-radius: 8px; padding: 6px 10px; line-height: 1.5;
+  }
+  #hud b { color: #ffd76a; }
+  #objective { text-align: center; }
+  #alertbar { width: 170px; height: 10px; background: #22263a; border-radius: 5px;
+    margin-top: 4px; overflow: hidden; border: 1px solid #555; }
+  #alertfill { height: 100%; width: 0%; background: #ffd76a; transition: width 0.12s linear; }
+  #toast {
+    position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+    background: rgba(8, 10, 20, 0.8); border: 1px solid rgba(200, 180, 120, 0.4);
+    padding: 8px 16px; border-radius: 8px; font-size: 15px; pointer-events: none;
+    opacity: 0; transition: opacity 0.25s; white-space: nowrap;
+  }
+  #help {
+    margin-top: 8px; text-align: center; font-size: 13px; color: #9aa3c0;
+    line-height: 1.6;
+  }
+  #help b { color: #d8d2b8; }
+  kbd {
+    background: #232742; border: 1px solid #4a5178; border-bottom-width: 2px;
+    border-radius: 4px; padding: 1px 6px; font-family: inherit; font-size: 12px;
+  }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="game" width="960" height="640"></canvas>
+  <div id="hud">
+    <div class="panel" id="levelPanel">Level <b id="levelNum">1</b> · <span id="levelName">The Gallery</span><br>
+      Gems <b id="gemCount">0</b> · Score <b id="scoreNum">0</b> · <span id="timeNum">0:00</span></div>
+    <div class="panel" id="objective">Objective: <b id="objectiveText">Steal the Moon Lantern</b>
+      <div id="alertbar"><div id="alertfill"></div></div>
+      <div id="alertLabel">Unseen</div></div>
+    <div class="panel">Noise <b id="noiseNum">quiet</b><br>Sound <b id="soundNum">on</b> (M)</div>
+  </div>
+  <div id="toast"></div>
+  <div id="help">
+    <b>WASD / Arrows</b> move &nbsp;·&nbsp; <b>Shift</b> sneak (slow, hard to spot) &nbsp;·&nbsp;
+    <b>Click</b> walk to a spot &nbsp;·&nbsp; <b>R</b> restart &nbsp;·&nbsp; <b>M</b> mute &nbsp;·&nbsp; <b>P</b> pause<br>
+    Stay out of the yellow vision cones. Bushes and crates block a guard's sight — crouch in a bush to vanish.
+    Grab the lantern, then slip out the green exit.
+  </div>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
